@@ -3,20 +3,24 @@ package com.linecode.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
+@Entity
 public class ListaTarefa {
 	
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String titulo;
-	private List<Item> listaItens;
+	
+	@OneToMany(mappedBy = "listaTarefa")
+	private List<Item> listaItens = new ArrayList<>();;
 	
 	public ListaTarefa(String titulo) {
 		this.titulo = titulo;
-		this.listaItens = new ArrayList<>();
 	}
 	
 	public ListaTarefa() {}
