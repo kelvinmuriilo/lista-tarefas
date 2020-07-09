@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 public class ItemForm {
 	@NotNull @NotBlank(message = "Informe a descrição do item.")
 	private String descricao;
-	@NotNull @NotBlank(message = "Informe a lista a qual o item pertence.")
 	private Long idListaTarefa;
 	
 	
