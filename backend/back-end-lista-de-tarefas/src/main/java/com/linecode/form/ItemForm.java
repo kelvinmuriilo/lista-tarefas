@@ -1,13 +1,21 @@
 package com.linecode.form;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class ItemForm {
-	@NotNull @NotEmpty(message = "Informe a descrição da tarefa.")
+	@NotNull @NotBlank(message = "Informe a descrição do item.")
 	private String descricao;
-	@NotNull @NotEmpty(message = "Informe a lista da tarefa.")
+	@NotNull @NotBlank(message = "Informe a lista a qual o item pertence.")
 	private Long idListaTarefa;
+	
+	
+	public ItemForm(String descricao, Long idListaTarefa) {
+		this.descricao = descricao;
+		this.idListaTarefa = idListaTarefa;
+	}
+	
+	public ItemForm() {}
 	
 	public String getDescricao() {
 		return descricao;

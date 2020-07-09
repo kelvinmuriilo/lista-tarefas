@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.linecode.dao.ItemResitory;
+import com.linecode.dao.ItemRepository;
 import com.linecode.dao.ListaTarefaRepositoy;
 import com.linecode.dto.ListaTarefaDto;
 import com.linecode.exception.ExcecaoAplicacao;
@@ -24,51 +25,112 @@ import com.linecode.modelo.StatusItem;
 
 @Service
 public class AplicacaoServico {
+	
+	@Autowired
+	private Validator validator;
 
 	@Autowired
 	private ListaTarefaRepositoy listaTarefaRepository;
 	
 	@Autowired	
-	private ItemResitory itemRepository;
+	private ItemRepository itemRepository;
 
 	public List<ListaTarefaDto> getListaTarefa(){
 		List<ListaTarefa> listaTarefa = listaTarefaRepository.findAll();
 		return ListaTarefaDto.converterToList(listaTarefa);
 	}
 	
+	 /**
+     * Realiza o cadatro de uma lista de tarefas.
+     * 
+     * @param Objeto com par‚metros para cadastro da lista de tarefa {@link ListaTarefaForm}
+     */
+	
 	@Transactional
 	public void cadastrarListaTarefa(ListaTarefaForm listaTarefaForm) {
-		ListaTarefa listaTarefa = new ListaTarefa(listaTarefaForm.getTitulo());
-		listaTarefaRepository.save(listaTarefa);
+		
+		Assert.notNull(listaTarefaForm, "Informe os dados");
+		
+		Set<ConstraintViolation<ListaTarefaForm>> violacoes = validator.validate(listaTarefaForm);
+		
+		if(violacoes.isEmpty()) {
+			ListaTarefa listaTarefa = new ListaTarefa(listaTarefaForm.getTitulo());
+			listaTarefaRepository.save(listaTarefa);
+		} else {
+			throw new ExcecaoAplicacao(violacoes.stream().findFirst().get().getMessage());
+		}	
+		
 	}
+	
+	
+	/**
+     * Realiza o cadatro de um item a uma lista de tarefas.
+     * 
+     * @param Objeto com par‚metros para cadastro do de tarefa {@link ItemForm}
+     */
 	
 	@Transactional
 	public void cadastrarItem(ItemForm itemForm) {
-		ListaTarefa listaTarefa = listaTarefaRepository.findById(itemForm.getIdListaTarefa()).get();
-		if(listaTarefa != null) {
-			Item item = new Item(itemForm.getDescricao(), listaTarefa);
-			itemRepository.save(item);
+		
+		Assert.notNull(itemForm, "Informe os dados");
+		
+		Set<ConstraintViolation<ItemForm>> violacoes = validator.validate(itemForm);
+		
+		if(violacoes.isEmpty()) {
+			ListaTarefa listaTarefa = listaTarefaRepository.findById(itemForm.getIdListaTarefa()).get();
+			if(listaTarefa != null) {
+				Item item = new Item(itemForm.getDescricao(), listaTarefa);
+				itemRepository.save(item);
+			} else {
+				throw new ExcecaoAplicacao("Lista n„o encontrada!");
+			}
 		} else {
-			throw new ExcecaoAplicacao("Lista n√£o encontrada!");
-		}
+			throw new ExcecaoAplicacao(violacoes.stream().findFirst().get().getMessage());
+		}	
 	}
+	
+	
+	/**
+     * Atualiza o status do item para concluÌdo ou pendente.
+     * 
+     * @param Id para localizar o item a ser atualizado {@link Long}
+     * @param Objeto com par‚metros para cadastro da lista de tarefa {@link AtualizarItemForm}
+     */
 	
 	@Transactional
-	public void atualizarTarefa(Long id ,AtualizarItemForm form) {
-		Item item = itemRepository.findById(id).get();
-		if(item != null) {
-			item.setStatus(StatusItem.CONCLUIDO);
-			itemRepository.save(item);
-		}
+	public void atualizarItem(Long id ,AtualizarItemForm form) {
+		Assert.notNull(form, "Informe os dados");
+		
+		Set<ConstraintViolation<AtualizarItemForm>> violacoes = validator.validate(form);
+
+		
+		if(violacoes.isEmpty()) {
+			Item item = itemRepository.findById(id).get();
+			if(item != null) {
+				item.setStatus(StatusItem.CONCLUIDO);
+				itemRepository.save(item);
+			} else {
+				throw new ExcecaoAplicacao("Lista n„o encontrada!");
+			}
+		} else {
+			throw new ExcecaoAplicacao(violacoes.stream().findFirst().get().getMessage());
+		}	
+				
 	}
 	
+	
+	/**
+     * Realiza a exclus„o de um item da lista de tarefas.
+     * 
+     * @param Id para localizar o item a ser deletado {@link Long}
+     */
 	@Transactional
 	public void removerItem(Long id) {
 		Optional<Item> item = itemRepository.findById(id);
 		if(item.isPresent()) {
 			itemRepository.deleteById(id);
 		} else {
-			throw new ExcecaoAplicacao("Erro ao remover. Item n√£o encontrado");
+			throw new ExcecaoAplicacao("Erro ao remover. Item n„o encontrado");
 		}
 	}
 }

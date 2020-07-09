@@ -34,7 +34,7 @@ public class ItemController {
 	@PutMapping("{id}")
 	@Transactional
 	public ResponseEntity<String> atualizarItem(@PathVariable Long id, @RequestBody AtualizarItemForm atualizarItemForm){
-		aplicacaoServico.atualizarTarefa(id, atualizarItemForm);
+		aplicacaoServico.atualizarItem(id, atualizarItemForm);
 		return ResponseEntity.ok("Item atualizado com sucesso!");
 	}
 	
