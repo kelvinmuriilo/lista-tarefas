@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ViewChild, ElementRef } from '@angular/core';
+
 import { CriarListaTarefa } from 'src/app/app.modelos';
 import { ListaTarefaService } from 'src/app/servicos/lista-tarefa.service';
 
@@ -12,9 +13,11 @@ export class CriadorListaTarefaComponent implements OnInit {
 
   @Output('clickBotaoCancelar') clickBotaoCancelar: EventEmitter<any> = new EventEmitter;
   @Output('carregarListaEvent') carregarListaEvent: EventEmitter<any> = new EventEmitter;
+  @ViewChild('tituloInput') tituloInput: ElementRef<HTMLInputElement>;
+
 
   constructor(
-    private listaTarefaService: ListaTarefaService
+    private listaTarefaService: ListaTarefaService,
   ) { }
 
   ngOnInit(): void {
@@ -29,9 +32,12 @@ export class CriadorListaTarefaComponent implements OnInit {
   criarLista(){
     console.log(this.listaTarefa)
     this.listaTarefaService.criarListaTarefa(this.listaTarefa).subscribe(
-      data => {
-        alert(data.toString());
+      () => {
         this.carregarListaEvent.emit();
+      },
+      error => {
+        console.log(error)
+        alert("Erro ao criar lista de tarefas. " + error.message);
       }
     );
   }

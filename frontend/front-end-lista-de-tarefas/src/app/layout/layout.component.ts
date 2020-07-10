@@ -52,16 +52,12 @@ export class LayoutComponent implements OnInit {
       status: StatusItem.CONCLUIDO
     }
 
-    this.spinnerService.show();
     this.itemService.atualizarStatusItem(idItem, atualizarItem).subscribe(
       data => {
         this.carregarListaTarefa();
       },
       error => {
         alert('Erro ao atualizar status do item. ' + error);
-      },
-      () =>{
-        this.spinnerService.hide();
       }
     );
   }
