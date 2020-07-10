@@ -1,0 +1,19 @@
+.col-12{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.area-botao-adicionar{
+   border-top: 1px solid rgba(0,0,0,0.1);; 
+}
+
+.fa-trash{
+    color: grey;
+    display: none;
+}
+
+.item-area:hover{
+    .fa-trash{
+        display: inline;
+    }
+}

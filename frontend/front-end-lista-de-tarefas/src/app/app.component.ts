@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'front-end-lista-de-tarefas';
+  title = 'Lita de tarefas';
 }

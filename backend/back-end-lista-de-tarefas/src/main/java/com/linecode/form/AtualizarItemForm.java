@@ -7,7 +7,7 @@ import com.linecode.modelo.StatusItem;
 
 public class AtualizarItemForm {
 	
-	@NotNull @NotBlank(message = "O status deve ser informado.")
+	//@NotNull @NotBlank(message = "O status deve ser informado.")
 	private StatusItem status;
 
 	public StatusItem getStatus() {

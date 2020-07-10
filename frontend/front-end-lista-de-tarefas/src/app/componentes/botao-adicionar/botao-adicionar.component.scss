@@ -1,0 +1,42 @@
+.btn-tela-inicial{
+    font-size: 30px;
+}
+
+.btn-tela-inicial i {
+    font-size: 15px;
+}
+
+
+button{
+    border: none;
+    background-color: #fff;
+    outline: none;
+}
+
+i{
+  font-size: 10px;
+}
+
+.area-icone{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: rgb(219,76,63);
+}
+
+button:hover{
+    color:  rgb(219,76,63);
+    .area-icone{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(219,76,63);
+        width: 20px;
+        height: 20px;
+        color: #fff;
+    }
+}

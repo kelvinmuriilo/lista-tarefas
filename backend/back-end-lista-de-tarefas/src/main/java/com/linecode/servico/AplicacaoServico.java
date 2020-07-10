@@ -41,7 +41,7 @@ public class AplicacaoServico {
 	}
 	
 	 /**
-     * Realiza o cadatro de uma lista de tarefas.
+     * Realiza o cadastro de uma lista de tarefas.
      * 
      * @param Objeto com parâmetros para cadastro da lista de tarefa {@link ListaTarefaForm}
      */
@@ -64,7 +64,7 @@ public class AplicacaoServico {
 	
 	
 	/**
-     * Realiza o cadatro de um item a uma lista de tarefas.
+     * Realiza o cadastro de um item a uma lista de tarefas.
      * 
      * @param Objeto com parâmetros para cadastro do de tarefa {@link ItemForm}
      */
@@ -98,23 +98,22 @@ public class AplicacaoServico {
      */
 	
 	@Transactional
-	public void atualizarItem(Long id ,AtualizarItemForm form) {
-		Assert.notNull(form, "Informe os dados");
+	public void atualizarItem(Long id) {
 		
-		Set<ConstraintViolation<AtualizarItemForm>> violacoes = validator.validate(form);
 
-		
-		if(violacoes.isEmpty()) {
-			Item item = itemRepository.findById(id).get();
-			if(item != null) {
+		Item item = itemRepository.findById(id).get();
+		if(item != null) {
+			if(item.getStatus() == StatusItem.CONCLUIDO) {
+				item.setStatus(StatusItem.PENDENTE);
+			}else {
 				item.setStatus(StatusItem.CONCLUIDO);
-				itemRepository.save(item);
-			} else {
-				throw new ExcecaoAplicacao("Lista não encontrada!");
 			}
+			
+			itemRepository.save(item);
 		} else {
-			throw new ExcecaoAplicacao(violacoes.stream().findFirst().get().getMessage());
-		}	
+			throw new ExcecaoAplicacao("Lista não encontrada!");
+		}
+	
 				
 	}
 	

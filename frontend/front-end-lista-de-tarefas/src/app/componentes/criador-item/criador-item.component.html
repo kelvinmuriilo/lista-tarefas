@@ -1,0 +1,26 @@
+<div class="row">
+       <div class="col-12">
+        <input-text
+            placeholder="Adicione um novo item"
+            [valorInicial]="item.descricao"
+            (valorRetorno)="item.descricao=$event">
+        </input-text>
+    </div>
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4 mt-2">
+        <botao
+            nome="Salvar"
+            classeHabilitado="btn-outline-info btn-block"
+            [liberado]="liberarBotaoSalvar()"
+            (eventoClick)="criarItem()">
+        </botao>
+    </div>
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4 mt-2">
+        <botao
+            nome="Cancelar"
+            classeHabilitado="btn-outline-dark btn-block"
+            classeDesabilitado="btn-outline-secondary btn-block"
+            (eventoClick)="clickCancelar()">
+        </botao>
+    </div>
+</div>

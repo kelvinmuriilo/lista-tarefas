@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-12">
+        <h2 class="titulo">Criar lista de tarefas</h2>
+    </div>
+
+    <div class="col-12">
+        <input-text
+            placeholder="Título da lista"
+            [valorInicial]="listaTarefa.titulo"
+            (valorRetorno)="listaTarefa.titulo=$event">
+        </input-text>
+    </div>
+
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4 mt-2">
+        <botao
+            nome="Salvar"
+            classeHabilitado="btn-outline-info btn-block"
+            [liberado]="liberarBotaoSalvar()"
+            (eventoClick)="criarLista()">
+        </botao>
+    </div>
+    <div class="col-12 col-sm-4 col-md-4 col-lg-4 mt-2">
+        <botao
+            nome="Cancelar"
+            classeHabilitado="btn-outline-dark btn-block"
+            classeDesabilitado="btn-outline-secondary btn-block"
+            (eventoClick)="clickCancelar()">
+        </botao>
+    </div>
+</div>
+

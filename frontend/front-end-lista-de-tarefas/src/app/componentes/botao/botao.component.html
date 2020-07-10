@@ -1,0 +1,9 @@
+<button 
+    class="btn {{ alterarEstilo() }}" 
+    (click)="bindClick()"
+    [disabled]="!liberado"
+   >
+
+    <i [class]="classeIcone"></i>
+    {{ nome }}
+</button>

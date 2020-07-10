@@ -1,0 +1,23 @@
+<ng-container
+    *ngIf="telaInicial">
+
+    <button class="btn-tela-inicial d-flex align-items-center" (click)="bindClick()">
+        <div class="area-icone">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+        </div>
+    
+        {{ nome }} 
+    </button>
+
+</ng-container>
+
+<ng-container
+    *ngIf="!telaInicial">
+    <button class="d-flex align-items-center" (click)="bindClick()">
+        <div class="area-icone">
+            <i class="fas fa-plus" aria-hidden="true"></i>
+        </div>
+    
+        {{ nome }} 
+    </button>
+</ng-container>

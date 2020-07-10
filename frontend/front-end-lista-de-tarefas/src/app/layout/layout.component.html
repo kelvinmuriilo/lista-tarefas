@@ -1,0 +1,64 @@
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-12">
+            <navbar></navbar>
+        </div>
+    </div>
+    <div class="row justify-content-center area-principal">
+        <div class="col-xl-4 col-sm-12 teste">
+            <div class="row justify-content-center">
+                <div class="col-md-12 col-lg-12">
+                    <div *ngIf="exibirAreaCriarLista()">
+                        <div class="col-12 mt-5 d-flex justify-content-center">
+                            <botao-adicionar
+                                *ngIf="exibirBotaoCadastrar"
+                                telaInicial="true"
+                                class="botao-adicionar"
+                                nome="Criar lista de tarefas"
+                                (eventoClick)="alterarExibirBotaoCadastrar()">
+                            </botao-adicionar>
+                        </div>
+        
+                        <div *ngIf="!exibirBotaoCadastrar">
+                            <criador-lista-tarefa
+                                (clickBotaoCancelar)="alterarExibirBotaoCadastrar()"
+                                (carregarListaEvent)="carregarListaTarefa()">
+                            </criador-lista-tarefa>
+                        </div>
+                    </div>
+
+                    <div *ngIf="!exibirAreaCriarLista()" class="d-flex flex-column justify-content-center mt-4">
+                        
+                        <h2 class="titulo-lista">{{ listaTarefa.titulo }}</h2>
+
+                        <div class="item-area d-flex ml-4 align-items-center justify-content-between" 
+                        *ngFor="let item of listaTarefa.listaItens">
+                            <item class="item" [item]="item"
+                                (marcarCheckbox)="atualizarStatusItem(item.id)">
+                            </item>
+                            <i class="fas fa-trash mr-3" (click)="removerItem(item.id)"></i>
+                        </div>
+
+                        <div class="area-botao-adicionar mt-3">
+                            <botao-adicionar 
+                                *ngIf="!exibirCriarItem"
+                                nome="Adicionar tarefa"
+                                (eventoClick)="alterarExibirCriarItem()">
+                            </botao-adicionar>
+
+                            <criador-item
+                                class="mt-5" 
+                                *ngIf="exibirCriarItem"
+                                [idListaTarefa]="listaTarefa.id"
+                                (clickBotaoCancelar)="alterarExibirCriarItem()"
+                                (carregarListaTarefa)="carregarListaTarefa()"
+                                (fecharJanela)="alterarExibirCriarItem()">
+                            </criador-item>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+        </div>
+    </div>
+</div>
