@@ -1,6 +1,6 @@
 # Task Manager
 
-## Requisitos: 
+## Requisitos 
   A empresa ACME decidiu criar uma lista de tarefas e a área de negócio definiu que o MVP deve
   conter apenas as funcionalidades abaixo:
   * Criar a lista
