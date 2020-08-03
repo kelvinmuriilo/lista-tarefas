@@ -15,6 +15,8 @@ public class ListaTarefaDto {
 		this.titulo = listaTarefa.getTitulo();
 		this.listaItens = listaTarefa.getListaItens().stream().map(ItemDto::new).collect(Collectors.toList());
 	}
+	
+	public ListaTarefaDto() {}
 
 	public Long getId() {
 		return id;
