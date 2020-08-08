@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.linecode.form.AtualizarItemForm;
 import com.linecode.form.ItemForm;
 import com.linecode.servico.AplicacaoServico;
 
