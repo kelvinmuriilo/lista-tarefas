@@ -5,10 +5,16 @@ import javax.validation.constraints.NotNull;
 
 public class ListaTarefaForm {
 	
-	@NotBlank(message = "O campo título não pode ser vazio.") 
-	@NotNull
+	@NotNull(message = "O campo título precisa ser preenchido.")
+	@NotBlank(message = "O campo título precisa ser preenchido.") 
 	private String titulo;
 
+	public ListaTarefaForm(String titulo) {
+		this.titulo = titulo;
+	}
+	
+	public ListaTarefaForm() {}
+	
 	public String getTitulo() {
 		return titulo;
 	}
