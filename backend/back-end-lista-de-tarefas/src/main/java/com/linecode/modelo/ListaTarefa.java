@@ -23,6 +23,12 @@ public class ListaTarefa {
 		this.titulo = titulo;
 	}
 	
+	//Construtor para mockar os dados para teste
+	public ListaTarefa(Long id, String titulo) {
+		this.id = id;
+		this.titulo = titulo;
+	}
+	
 	public ListaTarefa() {}
 
 	public Long getId() {
