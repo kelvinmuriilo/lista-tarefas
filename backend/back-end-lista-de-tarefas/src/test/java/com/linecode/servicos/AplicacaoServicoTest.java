@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.linecode.dao.ItemRepository;
 import com.linecode.dao.ListaTarefaRepositoy;
 import com.linecode.databuilders.ItemDataBuilder;
 import com.linecode.databuilders.ListaTarefaDataBuilder;
@@ -30,7 +31,7 @@ public class AplicacaoServicoTest {
 	private ListaTarefa listaTarefa;
 
 	@Autowired
-	AplicacaoServico aplicacaoServico;	
+	private AplicacaoServico aplicacaoServico;	
 	
 	@Autowired
 	private ListaTarefaRepositoy listaTarefaRepositoy;
@@ -91,7 +92,18 @@ public class AplicacaoServicoTest {
 	
 	@Test
 	public void deveLancarExececaoAoCadastrarItemComIdListaTarefaInexistente() {
-		
+
+		try {
+			ItemForm itemFormListaTarefaInexistente = new ItemDataBuilder()
+					.descricao("Teste")
+					.idListaTarefa(2L)
+					.constroi();
+			aplicacaoServico.cadastrarItem(itemFormListaTarefaInexistente);
+			fail();
+		} catch (ExcecaoAplicacao e) {
+			assertEquals(MSG_LISTA_NAO_ENCONTRADA, e.getMessage());
+		}
+	
 	}
 	
 }

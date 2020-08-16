@@ -77,9 +77,9 @@ public class AplicacaoServico {
 		Set<ConstraintViolation<ItemForm>> violacoes = validator.validate(itemForm);
 		
 		if(violacoes.isEmpty()) {
-			ListaTarefa listaTarefa = listaTarefaRepository.findById(itemForm.getIdListaTarefa()).get();
-			if(listaTarefa != null) {
-				Item item = new Item(itemForm.getDescricao(), listaTarefa);
+			Optional<ListaTarefa> listaTarefa = listaTarefaRepository.findById(itemForm.getIdListaTarefa());
+			if(listaTarefa.isPresent()) {
+				Item item = new Item(itemForm.getDescricao(), listaTarefa.get());
 				itemRepository.save(item);
 			} else {
 				throw new ExcecaoAplicacao("Lista não encontrada!");
@@ -101,15 +101,15 @@ public class AplicacaoServico {
 	public void atualizarItem(Long id) {
 		
 
-		Item item = itemRepository.findById(id).get();
-		if(item != null) {
-			if(item.getStatus() == StatusItem.CONCLUIDO) {
-				item.setStatus(StatusItem.PENDENTE);
+		Optional<Item> item = itemRepository.findById(id);
+		if(item.isPresent()) {
+			if(item.get().getStatus() == StatusItem.CONCLUIDO) {
+				item.get().setStatus(StatusItem.PENDENTE);
 			}else {
-				item.setStatus(StatusItem.CONCLUIDO);
+				item.get().setStatus(StatusItem.CONCLUIDO);
 			}
 			
-			itemRepository.save(item);
+			itemRepository.save(item.get());
 		} else {
 			throw new ExcecaoAplicacao("Lista não encontrada!");
 		}
